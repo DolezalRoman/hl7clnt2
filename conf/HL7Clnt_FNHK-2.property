@@ -1,0 +1,132 @@
+
+# $Id: HL7Clnt_FNHK-2.property,v 1.5 2017/12/04 13:03:01 raska Exp $
+# $Log: HL7Clnt_FNHK-2.property,v $
+# Revision 1.5  2017/12/04 13:03:01  raska
+# upraven konfiguracni soubor HL7Clnt_FNHK-2.property
+#
+# Revision 1.4  2017/12/04 12:39:07  raska
+# ver 2.7.2; klient podporuje upravu rodneho cisla ve zprave (lomitko, bez lomitka, hodnota z databaze)
+#
+# Revision 1.3  2017/08/15 09:16:48  raska
+# Doplneny a upraveny konfiguraky pro druhou instanci ve FNHK.
+#
+# Revision 1.2  2017/05/03 09:19:54  dolezal
+# *** empty log message ***
+#
+# Revision 1.1  2017/05/02 13:02:03  raska
+# ver 2.7.1, konfigurace pro FNHK - AZD
+#
+#
+
+# Identifikace systemu - jmeno identifikujici system, se kterym chceme komunikovat (zatim je to vzdy 1:1)
+
+ids = AMISHHL7
+
+# Segmentace zprav podle cilove aplikace - AZD
+status.offset = 100
+
+# Logovani
+
+logconfig = conf/log4j-2.xml
+
+# Parametry JDBC pripojeni k databazi AMIS*H
+
+jdbcdriver = com.informix.jdbc.IfxDriver
+
+dburl = jdbc:informix-sqli://nisdb.fnhk.cz:1770/hk:informixserver=hpsdb_tcp;DB_LOCALE=cs_cz.8859-2@sis;IFX_ISOLATION_LEVEL=2;IFX_LOCK_MODE_WAIT=5
+dblogin = amis
+dbpasswd = brno05
+
+# Parametry ridiciho cyklu klienta
+
+loopcount = 0
+loopdelay = 10
+
+# maximalni pocet opakovaneho odeslani jedne message
+
+maxmsgretrans = 5
+
+# Parametry pripojeni na vzdaleny HL7 server
+
+# parametry pouzite pro MLLP:
+llp.mllp.host = 192.168.248.56
+llp.mllp.port = 3200
+
+# Parametry pro kontrolovane odesilani zprav podle typu zpravy a udalosti:
+message.event.ADT^A01.enable                = no
+message.event.ADT^A02.enable                = no
+message.event.ADT^A03.enable                = no
+message.event.ADT^A04.enable                = no
+message.event.ADT^A05.enable                = no
+message.event.ADT^A08.enable                = yes
+message.event.ADT^A11.enable                = no
+message.event.ADT^A12.enable                = no
+message.event.ADT^A13.enable                = no
+message.event.ADT^A18.enable                = yes
+message.event.ADT^A40.enable                = yes
+message.event.ORM^O01.enable                = no
+message.event.ORU^R01.enable                = no
+
+# Parametry pro databazovy cistic
+db.cleaner.message.sustain                  = 30
+db.cleaner.message.status                   = 107,108,109,111
+
+# Parametry pro generovani zprav
+
+field_sep                                   = |
+encode_char                                 = ^~\\&
+send_app_name                               = AMISH
+send_fac_name                               = AMISHHL7
+send_fac_id                                 = AMISHHL7@i.cz
+send_fac_id_type                            = DNS
+recive_app_name                             = APFS
+recive_fac_name                             = APFS
+proc_id                                     = P
+ver_id                                      = 2.3
+char_set                                    = 8859/2
+
+# patient_id_suffix_length                    =
+# patient_id_suffix_sep                       =
+# order_number_sep                            = @
+place_field_1                               = modality
+
+org_struct_namespace                        = AMISHORG
+
+# Definuje seznam nspace, ktere se budou genetrovat do PID-3, definovane jsou: RC RC@ID AMISHHL7
+message.ALL.PID.internal_nspaces            = RC
+
+# Definuje seznam nspace, ktere se budou genetrovat do MRG, definovane jsou: RC RC@ID AMISHHL7
+message.ADT.MRG.internal_nspaces            = RC
+
+# Parametry pro generovani diagnoz do ORM zprav
+message.ORM.diag.DG1                        = yes
+message.ORM.diag.clininfo                   = no
+
+message.ORM.diag.clininfo.separator         = 
+
+message.ORM.diag.DG1.codsys                 = AMISHRTG
+message.ORM.diag.DG1.type                   = A
+
+# Parametry pro generovani vysledku do ORM zprav - segment OBX
+message.ORM.result.OBX                      = no
+
+message.ORM.result.OBX.weight.ident         = WEIGHT
+message.ORM.result.OBX.weight.unit          = kg
+message.ORM.result.OBX.height.ident         = HEIGHT
+message.ORM.result.OBX.height.unit          = cm
+message.ORM.result.OBX.age.ident            = AGE
+
+# Parametry formatovani vystupnich zprav
+hl7.output.encoding                         = ASCII
+
+# uprava RC ve zprave: S - slash, N - noslash, prazdne - keep value
+hl7.output.rc_modif = N
+
+# Parametry pro vypocet veku pacienta
+patient.age.year.threshold                  = 365
+patient.age.year.unit                       = rok
+patient.age.month.threshold                 = 90
+patient.age.month.unit                      = mes
+patient.age.week.threshold                  = 14
+patient.age.week.unit                       = tyd
+patient.age.day.unit                        = dnu

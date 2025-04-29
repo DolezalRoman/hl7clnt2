@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+# /etc/rc.d/init.d/hl7clnt
+#
+# description: HL7 Client for AMIS*H
+#
+# chkconfig: 35 99 1
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+PRODUCT_NAME="HL7 Client"
+PRODUCT_DIR=/opt/hl7clnt
+SCRIPT_NAME=hl7clnt.sh
+
+retval=0
+case "$1" in
+    start)
+        echo "Starting ${PRODUCT_NAME} services:"
+        su - amis -c "cd ${PRODUCT_DIR} && bin/${SCRIPT_NAME} start" || retval=1
+        touch /var/lock/subsys/hl7clnt
+        echo -n "${PRODUCT_NAME} startup finished: "
+        [ $retval -eq 0 ] && echo_success || echo_failure
+        echo
+    ;;
+    stop)
+        echo "Shutting down ${PRODUCT_NAME} services:"
+        su - amis -c "cd ${PRODUCT_DIR} && bin/${SCRIPT_NAME} stop" || retval=1
+        rm -f /var/lock/subsys/hl7clnt
+        echo -n "${PRODUCT_NAME} shutdown finished: "
+        [ $retval -eq 0 ] && echo_success || echo_failure
+        echo
+    ;;
+    status)
+        su - amis -c "cd ${PRODUCT_DIR} && bin/${SCRIPT_NAME} status" || retval=1
+	;;
+	restart)
+	    $0 stop
+	    $0 start
+	;;
+	*)
+	    echo "Usage: $0 {start|stop|status|restart}"
+	    exit 1
+	;;
+esac
+exit $retval

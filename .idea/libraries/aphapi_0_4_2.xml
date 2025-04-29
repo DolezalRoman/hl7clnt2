@@ -1,0 +1,25 @@
+<component name="libraryTable">
+  <library name="aphapi-0.4.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/aphapi-0.4.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ifxjdbc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../hl7clnt/lib/junit.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ifxjdbcx.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ifxlang.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ifxlsupp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ifxsqlj.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ifxtools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../aphapi_042/src" />
+      <root url="file://$PROJECT_DIR$/../../plugins" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$/../aphapi_042/src/ca/uhn/hl7v2" />
+    </excluded>
+    <jarDirectory url="file://$PROJECT_DIR$/../../plugins" recursive="false" type="SOURCES" />
+  </library>
+</component>

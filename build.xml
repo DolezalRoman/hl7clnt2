@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id: build.xml,v 1.17 2020/02/26 14:44:03 amis Exp $ -->
+<!--
+     $Log: build.xml,v $
+     Revision 1.17  2020/02/26 14:44:03  amis
+     Migrated to OpenJDK 8.
+
+     Revision 1.16  2019/10/03 06:54:33  dolezal
+     Rev. 2.7.4 Oprava podepisovani popisu v segmentu OBX
+
+     Revision 1.15  2019/09/26 09:41:02  dolezal
+     Rev 2.7.3 Zasilane nalezy RO1 opatreny datem a podpisem.
+
+     Revision 1.14  2017/12/04 12:39:07  raska
+     ver 2.7.2; klient podporuje upravu rodneho cisla ve zprave (lomitko, bez lomitka, hodnota z databaze)
+
+     Revision 1.13  2017/08/15 09:16:47  raska
+     Doplneny a upraveny konfiguraky pro druhou instanci ve FNHK.
+
+     Revision 1.12  2017/05/02 13:02:02  raska
+     ver 2.7.1, konfigurace pro FNHK - AZD
+
+     Revision 1.11  2017/04/24 13:25:26  raska
+     ver. 2.7.0; spojeni verze od Pavla Navrkala, odstraneny warning
+
+     Revision 1.10  2015/10/22 08:24:26  dolezal
+     Revize 2.6.6
+
+     Revision 1.9  2009/03/13 15:53:12  raska
+     rev 2.6.5
+
+     Revision 1.8  2007/10/05 06:55:00  dolezal
+     rev.1.6.4
+
+     Revision 1.7  2006/07/27 13:25:08  raska
+     rev 2.6.3
+
+     Revision 1.6  2005/11/11 15:10:34  raska
+     rev 2.6.2
+
+     Revision 1.5  2005/10/20 13:28:04  raska
+     rev 2.6.1
+
+     Revision 1.4  2005/10/19 14:38:33  raska
+     rev 2.6.0
+
+     Revision 1.3  2005/10/16 17:02:11  raska
+     rev 2.5.1
+
+     Revision 1.2  2005/10/10 12:01:57  raska
+     rev 2.5.0
+
+     Revision 1.1  2005/10/09 16:41:27  raska
+     Zavedeni do nove repository.
+
+     Revision 1.12  2005/10/03 11:17:57  raska
+     rev 2.4.0
+
+     Revision 1.11  2005/08/25 08:43:01  raska
+     rev 2.3.0
+
+     Revision 1.10  2005/07/20 18:57:12  raska
+     rev 2.2.3
+
+     Revision 1.9  2005/07/20 10:27:11  raska
+     rev 2.2.2
+
+     Revision 1.8  2005/07/15 09:25:12  raska
+     rev 2.2.1
+
+     Revision 1.7  2005/07/11 16:21:21  raska
+     rev 2.2.0
+
+     Revision 1.6  2005/06/28 17:59:35  raska
+     rev 2.1.3
+
+     Revision 1.5  2005/06/13 08:01:36  raska
+     rev 2.1.2
+
+     Revision 1.4  2005/06/03 12:50:18  raska
+     rev 2.1.0
+
+     Revision 1.3  2005/05/20 14:38:11  raska
+     rev 2.0.1
+
+     Revision 1.2  2005/05/20 13:17:05  raska
+     Procisteni verze od vsech nanosu FNBR.
+
+     Revision 1.1  2005/05/16 12:36:23  raska
+     Zalozeni projektu hl7clnt2 v repository.
+
+-->
+
+<project name="HL7 Client project" default="dist" basedir=".">
+	<description>
+		Sestavovaci popis pro preklad, sestaveni a vytvoreni distribuce HL7 Client
+	</description>
+	
+	<property name="version" value="2.9.0" />
+	<property name="src" location="src"/>
+	<property name="lib" location="lib"/>
+	<property name="build" location="build"/>
+	<property name="dist" location="dist/hl7clnt2-${version}"/>
+	<property name="doc" location="doc"/>
+ 
+	<target name="init">
+		<tstamp/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<description>
+			Preklad vsech trid zahrnutych do projektu ...
+		</description>
+		<echo message="Preklad vsech trid zahrnutych do projektu ..."/>
+		<mkdir dir="${build}"/>
+		<javac srcdir="${src}" destdir="${build}">
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>	
+			</classpath>
+			<include name="**/*.java"/>
+		</javac>
+	</target>
+
+	<target name="doc" depends="init">
+		<description>
+			Generuje javadoc dokumentaci ze zdrojovych souboru do adresare doc. Odsud se to pak presune do distribuce.
+		</description>
+		<mkdir dir="${doc}"/>
+		<javadoc destdir="${doc}" private="true">
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>	
+			</classpath>
+			<fileset dir="${src}">
+				<include name="**/*.java"/>
+			</fileset>
+		</javadoc>
+	</target>	
+		
+	<target name="dist" depends="compile">
+		<description>
+				Vytvoreni distribucniho adresare.
+		</description>
+		<echo message="Sestaveni distribuce ..."/>
+		
+		<mkdir dir="${dist}/bin"/>
+		<mkdir dir="${dist}/conf"/>
+		<mkdir dir="${dist}/lib"/>
+		<mkdir dir="${dist}/log"/>
+		<mkdir dir="${dist}/deploy"/>
+		
+		<jar jarfile="${dist}/lib/hl7clnt2.jar">
+            <manifest>
+            	<attribute name="Built-By" value="${user.name}"/>
+                <section name="common">
+                   	<attribute name="Specification-Title" value="hl7clnt2"/>
+                	<attribute name="Specification-Version" value="${version}"/>
+                	<attribute name="Specification-Vendor" value="ICZ a.s. (c)"/>
+                	<attribute name="Implementation-Title" value="Komunikace pres rozhrani HL7"/>
+                	<attribute name="Implementation-Version" value="${TODAY}"/>
+                	<attribute name="Implementation-Vendor" value="RIS,komplement,NIS"/>
+          		</section>
+        	</manifest>			
+            <fileset dir="${build}">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+		
+		<copy todir="${dist}/lib">
+			<fileset dir="${lib}">
+				<include name="*.jar"/>
+				<exclude name="junit*.jar"/>
+			</fileset>
+		</copy>
+		
+		<fixcrlf srcdir="conf" destdir="${dist}/conf" eol="unix" eof="remove">
+			<include name="HL7Clnt.property"/>
+			<include name="HL7Clnt_FNHK.property"/>
+			<include name="HL7Clnt_FNHK-2.property"/>
+			<include name="HL7Clnt_FNOL.property"/>
+			<include name="HL7Clnt_UH.property"/>
+			<include name="log4j.xml"/>
+			<include name="log4j-2.xml"/>
+		</fixcrlf>
+
+		<fixcrlf srcdir="bin" destdir="${dist}/bin" eol="unix" eof="remove">
+			<include name="hl7clnt.sh"/>
+			<include name="hl7clnt-2.sh"/>
+		</fixcrlf>
+
+		<copy todir="${dist}/deploy">
+			<fileset dir="deploy">
+				<include name="init.d/hl7clnt"/>
+			</fileset>
+		</copy>
+
+		<tar tarfile="${dist}.tar.gz" basedir="${dist}" compression="gzip"/>
+	</target>
+	
+	<target name="clean">
+		<echo message="Promazani docasnych souboru projektu ..."/>
+		<delete>
+			<fileset dir="${build}" includes="**/*.class"/>
+		</delete>
+		<delete>
+			<fileset dir="${doc}" includes="**/*"/>
+		</delete>
+		<delete dir="${dist}"/>
+	</target>
+	
+</project>

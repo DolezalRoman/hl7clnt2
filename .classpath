@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="C:/eclipse/eclipse-gal/workspace/hl7clnt2/lib/aphapi-0.4.2.jar" sourcepath="/aphapi_042"/>
+	<classpathentry exported="true" kind="lib" path="C:/eclipse/eclipse-gal/workspace/hl7clnt2/lib/commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/eclipse/eclipse-gal/workspace/hl7clnt2/lib/ifxjdbc.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/eclipse/eclipse-gal/workspace/hl7clnt2/lib/ifxjdbcx.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/eclipse/eclipse-gal/workspace/hl7clnt2/lib/ifxlang.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/eclipse/eclipse-gal/workspace/hl7clnt2/lib/ifxlsupp.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/eclipse/eclipse-gal/workspace/hl7clnt2/lib/ifxsqlj.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/eclipse/eclipse-gal/workspace/hl7clnt2/lib/ifxtools.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/eclipse/eclipse-gal/workspace/hl7clnt2/lib/log4j-1.2.8.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="build"/>
+</classpath>

@@ -1,0 +1,107 @@
+
+# Identifikace systemu - jmeno identifikujici system, se kterym chceme komunikovat (zatim je to vzdy 1:1)
+
+ids = AMISHHL7
+
+# Logovani
+
+logconfig = conf/log4j.xml
+
+# Parametry JDBC pripojeni k databazi AMIS*H
+
+jdbcdriver = com.informix.jdbc.IfxDriver
+
+dburl = jdbc:informix-sqli://fik.brn.i.cz:1532/nem:INFORMIXSERVER=fik_11_tcp;DB_LOCALE=cs_cz.8859-2;DBDATE=Y4MD-;
+dblogin = amis
+dbpasswd = ejmis.05
+
+# Parametry ridiciho cyklu klienta
+
+loopcount = 0
+loopdelay = 10
+
+# maximalni pocet opakovaneho odeslani jedne message
+
+maxmsgretrans = 5
+
+# Parametry pripojeni na vzdaleny HL7 server
+
+# parametry pouzite pro MLLP:
+llp.mllp.host = localhost
+llp.mllp.port = 3000
+
+# Parametry pro kontrolovane odesilani zprav podle typu zpravy a udalosti:
+message.event.ADT^A01.enable                = yes
+message.event.ADT^A02.enable                = yes
+message.event.ADT^A03.enable                = yes
+message.event.ADT^A04.enable                = yes
+message.event.ADT^A05.enable                = yes
+message.event.ADT^A08.enable                = yes
+message.event.ADT^A11.enable                = yes
+message.event.ADT^A12.enable                = yes
+message.event.ADT^A13.enable                = yes
+message.event.ADT^A18.enable                = yes
+message.event.ADT^A40.enable                = yes
+message.event.ORM^O01.enable                = yes
+message.event.ORU^R01.enable                = yes
+
+# Parametry pro databazovy cistic
+db.cleaner.message.sustain                  = 30
+db.cleaner.message.status                   = 7,8,9,11
+
+# Parametry pro generovani zprav
+
+field_sep                                   = |
+encode_char                                 = ^~\\&
+send_app_name                               = AMISH
+send_fac_name                               = AMISHHL7
+send_fac_id                                 = AMISHHL7@i.cz
+send_fac_id_type                            = DNS
+recive_app_name                             = PACS
+recive_fac_name                             = PACS
+proc_id                                     = P
+ver_id                                      = 2.3
+char_set                                    = 8859/2
+
+# patient_id_suffix_length                    =
+# patient_id_suffix_sep                       =
+# order_number_sep                            = @
+place_field_1                               = modality
+
+org_struct_namespace                        = AMISHORG
+
+# Definuje seznam nspace, ktere se budou genetrovat do PID-3, definovane jsou: RC RC@ID AMISHHL7
+message.ALL.PID.internal_nspaces            = RC
+
+# Definuje seznam nspace, ktere se budou genetrovat do MRG, definovane jsou: RC RC@ID AMISHHL7
+message.ADT.MRG.internal_nspaces            = RC
+
+# Parametry pro generovani diagnoz do ORM zprav
+message.ORM.diag.DG1                        = yes
+message.ORM.diag.clininfo                   = no
+
+message.ORM.diag.clininfo.separator         = 
+
+message.ORM.diag.DG1.codsys                 = AMISHRTG
+message.ORM.diag.DG1.type                   = A
+
+# Parametry pro generovani vysledku do ORM zprav - segment OBX
+message.ORM.result.OBX                      = no
+
+message.ORM.result.OBX.weight.ident         = WEIGHT
+message.ORM.result.OBX.weight.unit          = kg
+message.ORM.result.OBX.height.ident         = HEIGHT
+message.ORM.result.OBX.height.unit          = cm
+message.ORM.result.OBX.age.ident            = AGE
+
+# Parametry formatovani vystupnich zprav
+hl7.output.encoding                         = ASCII
+
+# Parametry pro vypocet veku pacienta
+patient.age.year.threshold                  = 365
+patient.age.year.unit                       = rok
+patient.age.month.threshold                 = 90
+patient.age.month.unit                      = mes
+patient.age.week.threshold                  = 14
+patient.age.week.unit                       = tyd
+patient.age.day.unit                        = dnu
