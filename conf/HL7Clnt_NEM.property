@@ -60,7 +60,9 @@ jdbcdriver = com.informix.jdbc.IfxDriver
 # dblogin = amisys
 # dbpasswd = jAdePT
 
-dburl = jdbc:informix-sqli://fik.brn.i.cz:1532/nem:informixserver=fik_11_tcp;DB_LOCALE=cs_cz.8859-2@sis;IFX_ISOLATION_LEVEL=2;IFX_LOCK_MODE_WAIT=10
+# dburl = jdbc:informix-sqli://fik.brn.i.cz:1532/nem:informixserver=fik_11_tcp;DB_LOCALE=cs_cz.8859-2@sis;IFX_ISOLATION_LEVEL=2;IFX_LOCK_MODE_WAIT=10
+
+dburl = jdbc:informix-sqli://informix-amish.srv.hea.i.cz:1532/nem:INFORMIXSERVER=fik_14_tcp;DB_LOCALE=cs_cz.8859-2@sis;IFX_ISOLATION_LEVEL=2;IFX_LOCK_MODE_WAIT=10
 dblogin = amis
 dbpasswd = ejmis.05
 

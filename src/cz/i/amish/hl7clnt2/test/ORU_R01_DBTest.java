@@ -42,7 +42,7 @@ public class ORU_R01_DBTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}
-	
+
 	public void test1() throws Exception {
 		
 		adt.loadFromDb(699); //bio

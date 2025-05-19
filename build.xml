@@ -211,5 +211,26 @@
 		</delete>
 		<delete dir="${dist}"/>
 	</target>
-	
+
+	<target name="test" depends="compile">
+		<mkdir dir="build/test-results" />
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath>
+				<fileset dir="lib">
+					<include name="**/*.jar" />
+				</fileset>
+				<pathelement path="build" />
+			</classpath>
+			<formatter type="xml" />
+			<formatter type="plain" />
+			<batchtest>
+				<fileset dir="src">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+			<test todir="build/test-results" />
+		</junit>
+	</target>
+
+
 </project>
